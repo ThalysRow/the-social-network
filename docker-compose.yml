@@ -1,0 +1,21 @@
+services:
+  # app:
+  #   build: .
+  #   restart: always
+  #   container_name: app-rogue-network
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - ${PORT}:${PORT}
+  mongo:
+    image: mongo
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+    volumes:
+      - ./data/mongodb:/data/db
+    ports:
+      - ${DB_PORT}:${DB_PORT}
