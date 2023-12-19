@@ -94,3 +94,19 @@ export const validateUpdateUser = async (
     return res.status(500).json({ message: "Erro in validate update user" });
   }
 };
+
+export const validateDeleteUser = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userFind = await User.findById(req.userId);
+    if (!userFind) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: "Error in validate delete user" });
+  }
+};
