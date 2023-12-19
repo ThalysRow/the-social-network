@@ -1,14 +1,14 @@
 import { Router } from "express";
-import { UserController } from "../controllers/UsersControllers";
+import { UserController } from "../controllers/usersControllers";
 import {
   validateBodyUser,
   validateDeleteUser,
   validateLoginUser,
   validateUpdateUser,
   validateUserCreate,
-} from "../middlewares/ValidateUser";
+} from "../middlewares/validateUser";
 import { newUser, updateUser } from "../utils/schema";
-import { authentication } from "../middlewares/Authentication";
+import { authentication } from "../middlewares/authentication";
 const router = Router();
 
 router.post(

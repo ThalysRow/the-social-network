@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import User from "../models/User";
+import User from "../models/user";
 import bcrypt from "bcrypt";
-import { findUser, formateData } from "../utils/UserFunctions";
+import { findUser, formateData } from "../utils/userFunctions";
 import jwt from "jsonwebtoken";
 
 interface CustomRequest extends Request {
