@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import router from "./routes/routes";
 
 mongoose
-  .connect(process.env.DB_URI!)
+  .connect(process.env.DB_URI as string)
   .then(() => {
     const app = express();
 
