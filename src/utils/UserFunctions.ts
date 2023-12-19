@@ -1,3 +1,5 @@
+import User from "../models/User";
+
 export const formateData = (string: string) => {
   const array = string.trim().split(" ");
 
@@ -7,4 +9,9 @@ export const formateData = (string: string) => {
   }
 
   return array.join(" ");
+};
+
+export const findUser = async (email: string) => {
+  const user = User.findOne({ email });
+  return user;
 };
