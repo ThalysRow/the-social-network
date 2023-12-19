@@ -73,4 +73,13 @@ export class UserController {
       return res.status(500).json({ message: "Erro in update user" });
     }
   }
+
+  async delete(req: CustomRequest, res: Response) {
+    try {
+      await User.deleteOne({ _id: req.userId });
+      return res.status(204).json();
+    } catch (error) {
+      return res.status(500).json({ message: "Erro in delete user" });
+    }
+  }
 }
