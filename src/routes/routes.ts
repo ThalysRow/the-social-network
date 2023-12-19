@@ -2,6 +2,7 @@ import { Router } from "express";
 import { UserController } from "../controllers/UsersControllers";
 import {
   validateBodyUser,
+  validateDeleteUser,
   validateLoginUser,
   validateUpdateUser,
   validateUserCreate,
@@ -26,5 +27,6 @@ router.put(
   validateUpdateUser,
   new UserController().update
 );
+router.delete("/user", validateDeleteUser, new UserController().delete);
 
 export default router;
