@@ -2,6 +2,10 @@ import { Request, Response, NextFunction } from "express";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 
+interface CustomRequest extends Request {
+  userId?: number;
+}
+
 export const validateUserCreate = async (
   req: Request,
   res: Response,
@@ -63,5 +67,30 @@ export const validateLoginUser = async (
     next();
   } catch (error) {
     return res.status(500).json({ message: "Error in validate login user" });
+  }
+};
+
+export const validateUpdateUser = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { name, email, user_name, password, photo } = req.body;
+
+  if (!name && !email && !user_name && !password && !photo) {
+    return res
+      .status(400)
+      .json({ message: "You must enter at least one piece of data" });
+  }
+  try {
+    const userFind = User.findById(req.userId);
+
+    if (!userFind) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: "Erro in validate update user" });
   }
 };
