@@ -2,6 +2,7 @@ import { Router } from "express";
 import { UserController } from "../controllers/UsersControllers";
 import {
   validateBodyUser,
+  validateLoginUser,
   validateUserCreate,
 } from "../middlewares/ValidateUser";
 import { newUser } from "../utils/schema";
@@ -13,5 +14,6 @@ router.post(
   validateUserCreate,
   new UserController().create
 );
+router.post("/login", validateLoginUser, new UserController().login);
 
 export default router;
