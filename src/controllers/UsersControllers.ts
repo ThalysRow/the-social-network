@@ -4,6 +4,10 @@ import bcrypt from "bcrypt";
 import { findUser, formateData } from "../utils/UserFunctions";
 import jwt from "jsonwebtoken";
 
+interface CustomRequest extends Request {
+  userId?: number;
+}
+
 export class UserController {
   async create(req: Request, res: Response) {
     const { name, email, user_name, password, photo } = req.body;
@@ -46,6 +50,27 @@ export class UserController {
       return res.status(201).json({ userInfo, token });
     } catch (error) {
       return res.status(500).json({ message: "Erro in login user" });
+    }
+  }
+
+  async update(req: CustomRequest, res: Response) {
+    const { name, email, user_name, password, photo } = req.body;
+
+    try {
+      const user = await User.findById(req.userId);
+
+      const data = {
+        name: name ? formateData(name) : user!.name,
+        email: email ? email : user!.email,
+        user_name: user_name ? formateData(user_name) : user!.user_name,
+        password: password ? await bcrypt.hash(password, 10) : user!.password,
+        photo: photo ? photo : user!.photo,
+      };
+
+      await User.updateOne({ _id: req.userId }, data);
+      return res.status(204).json();
+    } catch (error) {
+      return res.status(500).json({ message: "Erro in update user" });
     }
   }
 }
