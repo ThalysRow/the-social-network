@@ -138,3 +138,23 @@ export const updateUser = joi.object({
       custom: "Format photo invalid",
     }),
 });
+
+export const NewPost = joi
+  .object({
+    description: joi
+      .string()
+      .required()
+      .max(1000)
+      .custom((message, helpers) => {
+        if (message.trim() === "") {
+          return helpers.message({ message: "Format invalid" });
+        }
+      }),
+  })
+  .messages({
+    "any.required": "The description field is required",
+    "string.empty": "The description field cannot be empty",
+    "string.max":
+      "The description field must have a maximum of 1000 characters",
+    custom: "Format invalid",
+  });
