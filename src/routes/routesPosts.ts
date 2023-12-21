@@ -6,11 +6,6 @@ import multer from "../middlewares/multer";
 
 const routePosts = Router();
 
-routePosts.post(
-  "/post",
-  validateNewPost(NewPost),
-  multer.array("images"),
-  new PostController().newPost
-);
+routePosts.post("/post", multer.array("images"), new PostController().newPost);
 
 export default routePosts;
