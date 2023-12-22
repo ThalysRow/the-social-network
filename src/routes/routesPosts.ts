@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { validateNewPost } from "../middlewares/validatePost";
 import { NewPost } from "../utils/schema";
 import { PostController } from "../controllers/postsControllers";
 import multer from "../middlewares/multer";
