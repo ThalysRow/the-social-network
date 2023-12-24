@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Post from "../models/post";
 import { uploadFile } from "../services/upload";
+import { listenPosters } from "../utils/postFunctions";
 
 interface CustomRequest extends Request {
   userId?: number;
@@ -32,6 +33,14 @@ export class PostController {
       return res.status(201).json(newPost);
     } catch (error) {
       return res.status(500).json({ message: "Erro in new post" });
+    }
+  }
+
+  async get(req: Request, res: Response) {
+    try {
+      const posts = await listenPosters(res);
+    } catch (error) {
+      return res.status(500).json({ message: "Erro in get posters" });
     }
   }
 }
