@@ -6,8 +6,9 @@ import { validateUpdatePost } from "../middlewares/validatePost";
 const routePosts = Router();
 
 routePosts.post("/post", multer.array("images"), new PostController().newPost);
-routePosts.get("/posts", new PostController().get);
+routePosts.get("/post", new PostController().get);
 routePosts.get("/post/:id", new PostController().show);
 routePosts.patch("/post/:id", validateUpdatePost, new PostController().update);
+routePosts.delete("/post/:id", validateUpdatePost, new PostController().delete);
 
 export default routePosts;
