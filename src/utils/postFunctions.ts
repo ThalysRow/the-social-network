@@ -1,5 +1,8 @@
 import { Request, Response } from "express";
 import Post from "../models/post";
+interface CustomRequest extends Request {
+  userId?: number;
+}
 
 export const listenPosters = async (res: Response) => {
   try {
@@ -87,5 +90,43 @@ export const listenPosters = async (res: Response) => {
     return posts;
   } catch (error) {
     return res.status(500).json({ message: "Erro in listen posters" });
+  }
+};
+
+export const likePost = async (req: CustomRequest, res: Response) => {
+  const { id } = req.params;
+  try {
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    if (post.likes && Array.isArray(post.likes)) {
+      const likeExist = post.likes.find((like) => Number(like) === req.userId);
+
+      if (likeExist) {
+        await Post.updateOne(
+          { _id: id },
+          {
+            $pull: {
+              likes: req.userId,
+            },
+          }
+        );
+        return res.status(204).json();
+      }
+
+      await Post.updateOne(
+        { _id: id },
+        {
+          $push: {
+            likes: req.userId,
+          },
+        }
+      );
+    }
+    return res.status(204).json();
+  } catch (error) {
+    return res.status(500).json({ message: "Erro in function like post" });
   }
 };
