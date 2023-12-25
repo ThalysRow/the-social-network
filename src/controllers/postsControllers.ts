@@ -68,4 +68,14 @@ export class PostController {
       return res.status(500).json({ message: "Erro in update post" });
     }
   }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      await Post.deleteOne({ _id: id });
+      return res.status(204).json();
+    } catch (error) {
+      return res.status(500).json({ message: "Erro in delete post" });
+    }
+  }
 }
