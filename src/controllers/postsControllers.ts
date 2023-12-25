@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import Post from "../models/post";
 import { uploadFile } from "../services/upload";
-import { listenPosters } from "../utils/postFunctions";
+import { likePost, listenPosters } from "../utils/postFunctions";
 
 interface CustomRequest extends Request {
   userId?: number;
@@ -76,6 +76,15 @@ export class PostController {
       return res.status(204).json();
     } catch (error) {
       return res.status(500).json({ message: "Erro in delete post" });
+    }
+  }
+
+  async likePost(req: Request, res: Response) {
+    try {
+      await likePost(req, res);
+      return res.status(204).json();
+    } catch (error) {
+      return res.status(500).json({ message: "Erro in like post" });
     }
   }
 }
