@@ -62,10 +62,6 @@ export class PostController {
     const { description } = req.body;
     const { id } = req.params;
     try {
-      const post = await Post.findById(id);
-      if (!post) {
-        return res.status(404).json({ message: "Post not found" });
-      }
       await Post.updateOne({ _id: id }, { description });
       return res.status(204).json();
     } catch (error) {
