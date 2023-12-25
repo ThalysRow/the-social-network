@@ -44,4 +44,17 @@ export class PostController {
       return res.status(500).json({ message: "Erro in get posters" });
     }
   }
+
+  async show(req: Request, res: Response) {
+    const { id } = req.params;
+    try {
+      const post = await Post.findById(id);
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+      return res.json(post);
+    } catch (error) {
+      return res.status(500).json({ message: "Erro in show post" });
+    }
+  }
 }
