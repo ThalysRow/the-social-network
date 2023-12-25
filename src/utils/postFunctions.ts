@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Post from "../models/post";
+import { Types } from "mongoose";
 interface CustomRequest extends Request {
   userId?: number;
 }
@@ -128,5 +129,31 @@ export const likePost = async (req: CustomRequest, res: Response) => {
     return res.status(204).json();
   } catch (error) {
     return res.status(500).json({ message: "Erro in function like post" });
+  }
+};
+
+export const comentPost = async (req: CustomRequest, res: Response) => {
+  const { id } = req.params;
+  const { description } = req.body;
+  try {
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    await Post.updateOne(
+      { _id: id },
+      {
+        $push: {
+          comments: {
+            _id: new Types.ObjectId(),
+            user_id: new Types.ObjectId(req.userId),
+            description,
+          },
+        },
+      }
+    );
+    return res.status(204).json();
+  } catch (error) {
+    return res.status(500).json({ message: "Erro in function coment post" });
   }
 };
