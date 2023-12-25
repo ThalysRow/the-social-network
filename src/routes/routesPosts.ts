@@ -6,5 +6,6 @@ const routePosts = Router();
 
 routePosts.post("/post", multer.array("images"), new PostController().newPost);
 routePosts.get("/posts", new PostController().get);
+routePosts.get("post/:id", new PostController().show);
 
 export default routePosts;
