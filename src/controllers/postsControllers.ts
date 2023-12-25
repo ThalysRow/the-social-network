@@ -57,4 +57,19 @@ export class PostController {
       return res.status(500).json({ message: "Erro in show post" });
     }
   }
+
+  async update(req: Request, res: Response) {
+    const { description } = req.body;
+    const { id } = req.params;
+    try {
+      const post = await Post.findById(id);
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+      await Post.updateOne({ _id: id }, { description });
+      return res.status(204).json();
+    } catch (error) {
+      return res.status(500).json({ message: "Erro in update post" });
+    }
+  }
 }
