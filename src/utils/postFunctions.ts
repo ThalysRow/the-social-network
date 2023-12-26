@@ -6,6 +6,17 @@ interface CustomRequest extends Request {
   userId?: number;
 }
 
+interface Comment {
+  _id: string;
+  user_id: string;
+  description: string;
+  user: {
+    name: string;
+    photo: string;
+    createdAt: Date;
+  };
+}
+
 export const listenPosters = async (res: Response) => {
   try {
     const posts = await Post.aggregate([
@@ -91,6 +102,15 @@ export const listenPosters = async (res: Response) => {
 
     const data = [];
     for (const post of posts) {
+      const formattedComments = post.comments.map((comment: Comment) => ({
+        _id: comment._id,
+        user_id: comment.user_id,
+        name: comment.user.name,
+        description: comment.description,
+        photo: comment.user.photo,
+        createdAt: comment.user.createdAt,
+      }));
+
       data.push({
         post_id: post._id,
         user_id: post.user_id,
@@ -98,7 +118,7 @@ export const listenPosters = async (res: Response) => {
         images: post.images,
         likes: post.likes,
         createAt: post.createAt,
-        comments: post.comments,
+        comments: formattedComments,
       });
     }
 
@@ -156,6 +176,7 @@ export const comentPost = async (req: CustomRequest, res: Response) => {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
+
     await Post.updateOne(
       { _id: id },
       {
