@@ -83,7 +83,6 @@ export class PostController {
   async likePost(req: CustomRequest, res: Response) {
     try {
       await likePost(req, res);
-      return res.status(204).json();
     } catch (error) {
       return res.status(500).json({ message: "Erro in like post" });
     }
