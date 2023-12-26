@@ -117,7 +117,9 @@ export const likePost = async (req: CustomRequest, res: Response) => {
     }
 
     if (post.likes && Array.isArray(post.likes)) {
-      const likeExist = post.likes.find((like) => Number(like) === req.userId);
+      const likeExist = post.likes.find(
+        (like) => String(like) === String(req.userId)
+      );
 
       if (likeExist) {
         await Post.updateOne(
