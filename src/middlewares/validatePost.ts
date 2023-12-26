@@ -33,7 +33,7 @@ export const validateUpdatePost = async (
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-    if (post.user_id !== req.userId) {
+    if (String(post.user_id) !== String(req.userId)) {
       return res.status(403).json({ message: "Not authorized" });
     }
     next();
