@@ -79,7 +79,7 @@ export class PostController {
     }
   }
 
-  async likePost(req: Request, res: Response) {
+  async likePost(req: CustomRequest, res: Response) {
     try {
       await likePost(req, res);
       return res.status(204).json();
@@ -88,7 +88,7 @@ export class PostController {
     }
   }
 
-  async comentPost(req: Request, res: Response) {
+  async comentPost(req: CustomRequest, res: Response) {
     try {
       await comentPost(req, res);
     } catch (error) {
