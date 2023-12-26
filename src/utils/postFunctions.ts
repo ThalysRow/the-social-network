@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Post from "../models/post";
 import { Types } from "mongoose";
+
 interface CustomRequest extends Request {
   userId?: number;
 }
@@ -88,7 +89,20 @@ export const listenPosters = async (res: Response) => {
       },
     ]);
 
-    return posts;
+    const data = [];
+    for (const post of posts) {
+      data.push({
+        post_id: post._id,
+        user_id: post.user_id,
+        description: post.description,
+        images: post.images,
+        likes: post.likes,
+        createAt: post.createAt,
+        comments: post.comments,
+      });
+    }
+
+    return data;
   } catch (error) {
     return res.status(500).json({ message: "Erro in listen posters" });
   }
