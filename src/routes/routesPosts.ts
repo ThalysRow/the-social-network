@@ -10,7 +10,7 @@ routePosts.get("/post", new PostController().get);
 routePosts.get("/post/:id", new PostController().show);
 routePosts.patch("/post/:id", validateUpdatePost, new PostController().update);
 routePosts.delete("/post/:id", validateUpdatePost, new PostController().delete);
-routePosts.patch("post/:id/like", new PostController().likePost);
+routePosts.patch("/post/:id/like", new PostController().likePost);
 routePosts.patch("/post/:id/coment", new PostController().comentPost);
 
 export default routePosts;
