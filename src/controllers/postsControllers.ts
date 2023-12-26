@@ -28,6 +28,7 @@ export class PostController {
         description,
         images,
         likes: [],
+        createAt: new Date(),
         comments: [],
       });
       return res.status(201).json(newPost);
