@@ -53,7 +53,17 @@ export class PostController {
       if (!post) {
         return res.status(404).json({ message: "Post not found" });
       }
-      return res.json(post);
+
+      const data = {
+        _id: post._id,
+        user_id: post.user_id,
+        description: post.description,
+        images: post.images,
+        likes: post.likes,
+        createdAt: post.createAt,
+        comments: post.comments,
+      };
+      return res.json(data);
     } catch (error) {
       return res.status(500).json({ message: "Erro in show post" });
     }
