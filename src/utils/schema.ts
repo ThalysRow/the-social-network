@@ -58,20 +58,6 @@ export const newUser = joi.object({
       "string.min": "The password field must have a minimum of 8 characters",
       custom: "Please check your password, no space allowed",
     }),
-
-  photo: joi
-    .string()
-    .required()
-    .custom((url, helpers) => {
-      if (url.trim() === "") {
-        return helpers.message({ message: "Photo format invalid" });
-      }
-    })
-    .messages({
-      "string.empty": "The photo field cannot be empty",
-      "any.required": "The photo field is required",
-      custom: "Photo format invalid",
-    }),
 });
 
 export const updateUser = joi.object({
@@ -124,18 +110,6 @@ export const updateUser = joi.object({
       "string.empty": "The user_name field cannot be empty",
       "string.max": "The user_name field must have a maximum of 10 characters",
       custom: "Format name invalid",
-    }),
-
-  photo: joi
-    .string()
-    .custom((url, helpers) => {
-      if (url.trim() === "") {
-        return helpers.message({ message: "Url invalid" });
-      }
-    })
-    .messages({
-      "string.empty": "The photo field cannot be empty",
-      custom: "Format photo invalid",
     }),
 });
 

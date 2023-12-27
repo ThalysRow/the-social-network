@@ -9,10 +9,12 @@ import {
 } from "../middlewares/validateUser";
 import { newUser, updateUser } from "../utils/schema";
 import { authentication } from "../middlewares/authentication";
+import multer from "../middlewares/multer";
 const routeUsers = Router();
 
 routeUsers.post(
   "/user",
+  multer.single("image"),
   validateBodyUser(newUser),
   validateUserCreate,
   new UserController().create

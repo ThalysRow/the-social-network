@@ -3,6 +3,7 @@ import User from "../models/user";
 import bcrypt from "bcrypt";
 import { findUser, formateData } from "../utils/userFunctions";
 import jwt from "jsonwebtoken";
+import { uploadFile } from "../services/upload";
 
 interface CustomRequest extends Request {
   userId?: number;
@@ -10,8 +11,14 @@ interface CustomRequest extends Request {
 
 export class UserController {
   async create(req: Request, res: Response) {
-    const { name, email, user_name, password, photo } = req.body;
+    const { name, email, user_name, password } = req.body;
+    const file = req.file as Express.Multer.File;
     try {
+      const image = await uploadFile(
+        `image/${file.originalname}`,
+        file.buffer,
+        file.mimetype
+      );
       const passCrypt = await bcrypt.hash(password, 10);
 
       await User.create({
@@ -19,7 +26,7 @@ export class UserController {
         email,
         user_name: formateData(user_name),
         password: passCrypt,
-        photo,
+        photo: image,
         createdAt: new Date(),
       });
 
