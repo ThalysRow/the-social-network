@@ -61,7 +61,7 @@ export class UserController {
   }
 
   async update(req: CustomRequest, res: Response) {
-    const { name, email, user_name, password, photo } = req.body;
+    const { name, email, user_name, password } = req.body;
 
     try {
       const user = await User.findById(req.userId);
@@ -71,7 +71,6 @@ export class UserController {
         email: email ? email : user!.email,
         user_name: user_name ? formateData(user_name) : user!.user_name,
         password: password ? await bcrypt.hash(password, 10) : user!.password,
-        photo: photo ? photo : user!.photo,
       };
 
       await User.updateOne({ _id: req.userId }, data);
