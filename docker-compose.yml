@@ -1,12 +1,12 @@
 services:
-  # app:
-  #   build: .
-  #   restart: always
-  #   container_name: app-rogue-network
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - ${PORT}:${PORT}
+  app:
+    build: .
+    restart: always
+    container_name: app-rogue-network
+    env_file:
+      - .env
+    ports:
+      - ${PORT}:${PORT}
   mongo:
     image: mongo
     restart: always
