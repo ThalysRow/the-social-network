@@ -159,4 +159,4 @@ Like post: http://localhost:3000/post/:id/like
 4. Submit your changes: `git push origin my-feature`
 
 ## 🧙‍♂️ Author
-Made with ❤️ by Thalys Row 👋🏽 [Contact!](www.linkedin.com/in/thalys-row)
+Made with ❤️ by Thalys Row 👋🏽 [Contact!](https://linkedin.com/in/thalys-row)
